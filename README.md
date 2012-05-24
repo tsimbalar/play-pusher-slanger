@@ -26,10 +26,10 @@ Before I forget, to get Slanger working on my MacBook Pro with OSX Lion and be a
     mv redis.conf ~/.redis
 
 * be sure to have ruby installed, with version 1.9.2-p290 or greater ... I didn't so I installedit via rvm, to avoid conflicts with the System version of Ruby :
-
-    # install rvm
+  * install rvm
+  
     $ curl -L get.rvm.io | bash -s stable
-    # ... and do what they ask to do (source ~/.rvm/scripts/...)
+  * ... and do what they ask to do (source ~/.rvm/scripts/...)
 
     rvm get head
     rvm install 1.9.3
