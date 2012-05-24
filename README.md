@@ -1,10 +1,11 @@
-# Play 2.0 demo application using WebSockets via Pusher...
+# Play 2.0 demo application using WebSockets via Pusher/Slanger...
 
 
 It uses stuff from :
 
-* https://gist.github.com/1129391
 * https://github.com/stevegraham/slanger
+* https://gist.github.com/1129391
+
 
 
 ## Getting it to work on OSX Lion
