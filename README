@@ -1,4 +1,9 @@
-This is your new Play 2.0 application
-=====================================
+Play 2.0 demo application using WebSockets via Pusher...
 
-This file will be packaged with your application, when using `play dist`.
+
+It uses stuff from :
+
+* https://gist.github.com/1129391
+* https://github.com/stevegraham/slanger
+
+
