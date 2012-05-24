@@ -19,7 +19,7 @@ Before I forget, to get Slanger working on my MacBook Pro with OSX Lion and be a
     cd redis-2.4.14
     make
     make test
-
+    
     sudo mv src/redis-server /usr/bin
     sudo mv src/redis-cli /usr/bin
     mkdir ~/.redis
