@@ -1,7 +1,86 @@
-@(message: String)
+@(clientConfig:utils.PusherClientConfig, channel:String, event:String)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message)
-    
+@main("Trying Slanger") {
+    <style>
+       div#log{
+            display:block;
+            width:50%;
+            min-width:500px;
+            position:fixed;
+            right:0px;
+            top:0px;
+            height:100%;
+            overflow:auto;
+            background-color:white;
+            font-family:courier;
+            font-size:10px;
+        }
+        span.pusherLog{
+            color:gray;
+        }
+        span.message{
+            color:darkGreen;
+        }
+        span.error{
+            color:red;
+        }
+
+        span.click{
+            color:blue;
+        }
+
+    </style>
+    <script>
+        Pusher.host    = "@clientConfig.host";
+        Pusher.ws_port = "@clientConfig.wsPort";
+        Pusher.wss_port = "@clientConfig.wssPort";
+        Pusher.log = function(data) {
+            //console.log('\t\t', data);
+            $("#log").prepend("<span class='pusherLog'>" + data + "</span><br/>");
+        };
+        var postUrl = "@routes.Application.postMessage";
+        count = 0;
+        var pusher = new Pusher('@clientConfig.key');
+        pusher.bind('pusher:error', function(data) {
+            alert(data['message']);
+            $("#log").prepend("<span class='error'>" + JSON.stringify(data) + "</span><br/>");
+        })
+        var myChannel = pusher.subscribe('@channel');
+        myChannel.bind('@event', function(data) {
+            count++;
+            $("#count").html(count);
+            $("#lastMessage").val(JSON.stringify(data));
+            $("#log").prepend("<span class='message'>Message :" + JSON.stringify(data) + "</span><br/>");
+        })
+
+        $(document).ready(function(){
+            $("#send").click(function(){
+                var msg = $("#msg").val();
+                $("#log").prepend("<span class='click'>POSTING " + msg + "</span><br/>");
+                $.ajax({
+                    type: 'POST',
+                    url: postUrl,
+                    data: {msg:msg},
+                    success: function(data, textStatus, jqXHR){
+                        $("#log").prepend("<span class='click'>Server response : " + textStatus + " - " + data + "</span><br/>");
+                    }
+                });
+            });
+        });
+
+
+    </script>
+    <h1>Pusher/Slanger - Play demo</h1>
+    <p>Clicking Send will send the content of the textarea to the server.</p>
+    <p> The server will trigger an event '@event' and send the content of the message<br/> to Pusher/Slanger on the
+    channel '@channel'</p>
+    <textarea id="msg"></textarea>
+    <button id="send">send</button>
+    <br/>
+    messages received :<span id="count">0</span>
+    <br/>
+    last message :
+    <textarea id="lastMessage"></textarea>
+    <div id="log" style="display:block;width:50%;min-width:500px;position:fixed;right:0px;top:0px;height:100%;overflow:auto;background-color:white;">
+    </div>
 }
